@@ -1,4 +1,3 @@
-# rocketseat-nodejs-prismaio
-Node.js with Prisma.io
+# NodeJS with Prisma
 
 Learning how to use prisma.io with node.js

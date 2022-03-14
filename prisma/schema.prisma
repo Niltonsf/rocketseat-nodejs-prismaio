@@ -7,6 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// 1 TO 1
 model Courses {
   id            String   @id @default(uuid())
   name          String   @unique
@@ -15,6 +16,7 @@ model Courses {
   created_at    DateTime @default(now())
   teacher       Teachers @relation(fields: [fk_id_teacher], references: [id])
   fk_id_teacher String   @unique
+  modules CoursesModules[]
 
   @@map("courses")
 }
@@ -24,6 +26,7 @@ model Modules {
   name        String   @unique
   description String
   created_at  DateTime @default(now())
+  courses CoursesModules[]
 
   @@map("modules")
 }
@@ -36,9 +39,20 @@ model Teachers {
   @@map("teachers")
 }
 
+// MANY TO MANY
+model CoursesModules {
+  id           String   @id @default(uuid())
+  courses      Courses  @relation(fields: [fk_id_course], references: [id])
+  fk_id_course String
+  modules      Modules  @relation(fields: [fk_id_module], references: [id])
+  fk_id_module String
+  created_at   DateTime @default(now())
+}
+
+// 1 TO MANY
 model Authors {
-  id   String @id @default(uuid())
-  name String @unique
+  id    String  @id @default(uuid())
+  name  String  @unique
   books Books[]
 
   @@map("authors")
